@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarFest.DAL", "DAL\CarFest.DAL.csproj", "{4942D893-90DB-4B98-9F29-175D2301774F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarFest.BL", "CarFest.BL\CarFest.BL.csproj", "{2F85127B-E7E1-4DC8-94EB-590BB280575F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarFest.API", "CarFest.API\CarFest.API.csproj", "{777A45E7-54FE-49D0-A7C8-D7D80F2BC098}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4942D893-90DB-4B98-9F29-175D2301774F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4942D893-90DB-4B98-9F29-175D2301774F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4942D893-90DB-4B98-9F29-175D2301774F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4942D893-90DB-4B98-9F29-175D2301774F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F85127B-E7E1-4DC8-94EB-590BB280575F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F85127B-E7E1-4DC8-94EB-590BB280575F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F85127B-E7E1-4DC8-94EB-590BB280575F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F85127B-E7E1-4DC8-94EB-590BB280575F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{777A45E7-54FE-49D0-A7C8-D7D80F2BC098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{777A45E7-54FE-49D0-A7C8-D7D80F2BC098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{777A45E7-54FE-49D0-A7C8-D7D80F2BC098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{777A45E7-54FE-49D0-A7C8-D7D80F2BC098}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22B35640-E1EE-4D6E-9B2C-19BEAA30F83D}
+	EndGlobalSection
+EndGlobal
