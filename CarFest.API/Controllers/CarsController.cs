@@ -1,4 +1,5 @@
 ﻿using CarFest.BL.Interfaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace CarFest.API.Controllers
 {
+    [EnableCors("CarFestCORS")]
     [Route("api/[controller]")]
     [ApiController]
     public class CarsController : ControllerBase

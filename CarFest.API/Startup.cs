@@ -45,7 +45,18 @@ namespace CarFest.API
             });
             services.AddAutoMapper(typeof(AppMappingProfile));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<ICarService, CarService>();            
+            services.AddScoped<ICarService, CarService>();
+            //add CORS policy
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CarFestCORS",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,13 +72,16 @@ namespace CarFest.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
+            //add CORS policy
+            app.UseCors();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            });           
         }
     }
 }
