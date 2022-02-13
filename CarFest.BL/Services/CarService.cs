@@ -27,7 +27,7 @@ namespace CarFest.BL.Services
             return _autoMapper.Map<IEnumerable<CarDTO>>(_db.CarRepository.GetAll());
         }
 
-        public async Task<IEnumerable<CarDTO>> GetAllAsync ()
+        public async Task<IEnumerable<CarDTO>> GetAllAsync()
         {
             return _autoMapper.Map<IEnumerable<CarDTO>>(await _db.CarRepository.GetAllAsync());
         }
@@ -44,7 +44,8 @@ namespace CarFest.BL.Services
 
         public CarDTO Create(CarDTO entity)
         {
-            if (entity == null){
+            if (entity == null)
+            {
                 throw new ArgumentNullException("Null argument while creating car");
             }
             var car = _autoMapper.Map<Car>(entity);
@@ -73,7 +74,7 @@ namespace CarFest.BL.Services
             return entity;
         }
 
-        public CarDTO Update (CarDTO entity)
+        public CarDTO Update(CarDTO entity)
         {
             if (entity == null)
             {
@@ -88,14 +89,14 @@ namespace CarFest.BL.Services
             _db.CarRepository.Update(car);
             _db.Save();
             return entity;
-        }  
-        
+        }
+
         public void Delete(int id)
         {
             var car = _db.CarRepository.Get(id);
             if (car == null)
             {
-                throw new ArgumentNullException($"No such student with Id: {id}");
+                throw new ArgumentNullException($"No such car with Id: {id}");
             }
 
             _db.CarRepository.Delete(id);

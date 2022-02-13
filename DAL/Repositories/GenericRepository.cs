@@ -20,39 +20,49 @@ namespace CarFest.DAL.Repositories
             _entity = _context.Set<TEntity>();
         }
 
-        IEnumerable<TEntity> IRepository<TEntity>.GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
             return _entity;
         }
 
-        Task<IEnumerable<TEntity>> IRepository<TEntity>.GetAllAsync()
+        public async Task<List<TEntity>> GetAllAsync()
+        {
+            return await _entity.ToListAsync();
+        }
+
+        public TEntity Get(int id)
+        {
+            return _entity.Find(id);
+        }
+
+        public Task<TEntity> GetAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        TEntity IRepository<TEntity>.Get(int id)
+        public TEntity Create(TEntity entity)
         {
-            throw new NotImplementedException();
+            _entity.Add(entity);
+            return entity;
         }
 
-        Task<TEntity> IRepository<TEntity>.GetAsync(int id)
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        TEntity IRepository<TEntity>.Create(TEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IRepository<TEntity>.Delete(int id)
-        {
-            throw new NotImplementedException();
+            TEntity entity = _entity.Find(id);
+            if (entity != null)
+            {
+                _entity.Remove(entity);
+            }
         }       
 
-        TEntity IRepository<TEntity>.Update(TEntity entity)
+        public TEntity Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            if (entity == null)
+            {
+                return null;
+            }
+            _entity.Update(entity);
+            return entity;
         }
     }
 }
