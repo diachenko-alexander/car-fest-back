@@ -27,7 +27,7 @@ namespace CarFest.API.Controllers
         public IActionResult RegisterUser(UserForRegistrationDTO userForRegistration)
         {
             try
-            {
+            {                
                 var user = _userRegistrationService.RegisterUser(userForRegistration);
                 if (!user.Result.Succeeded)
                 {
