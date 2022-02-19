@@ -13,6 +13,8 @@ namespace CarFest.BL.Configuration
         public AppMappingProfile()
         {
             CreateMap<Car, CarDTO>().ReverseMap();
+            CreateMap<UserForRegistrationDTO, User>()
+                .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
         }
        
     }

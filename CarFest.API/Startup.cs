@@ -19,6 +19,8 @@ using CarFest.BL.Interfaces;
 using CarFest.BL.Services;
 using CarFest.DAL.Interfaces;
 using CarFest.DAL.Repositories;
+using CarFest.DAL.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace CarFest.API
 {
@@ -46,6 +48,7 @@ namespace CarFest.API
             services.AddAutoMapper(typeof(AppMappingProfile));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICarService, CarService>();
+            services.AddScoped<IUserRegistrationService, UserRegistrationService>();
             //add CORS policy
             services.AddCors(options =>
             {
@@ -57,6 +60,8 @@ namespace CarFest.API
                                             .AllowAnyMethod();
                     });
             });
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
