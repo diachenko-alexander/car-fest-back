@@ -68,7 +68,7 @@ namespace CarFest.API.Controllers
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingcredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
-            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
+            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token, UserFirstName = user.FirstName });
 
         }
     }
