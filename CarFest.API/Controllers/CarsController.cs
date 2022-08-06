@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using CarFest.DAL.Models;
 
 namespace CarFest.API.Controllers
 {
@@ -18,21 +21,27 @@ namespace CarFest.API.Controllers
     public class CarsController : ControllerBase
     {
         private ICarService _carService;
-        public CarsController(ICarService carService)
+        private readonly UserManager<User> _userManager;        
+        public CarsController(ICarService carService, UserManager<User> userManager)
         {
             _carService = carService;
-        }
-
+            _userManager = userManager;
+            
+        }      
+       
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<OkObjectResult> GetAll()
         {
-            return Ok(_carService.GetAll());
-        }
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);            
+
+            return Ok(await _carService.GetUserCarsAsync(user.Id));
+        }        
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var car = _carService.Get(id);
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var car = _carService.GetUserCar(id, user.Id);
             if (car == null)
             {
                 return NotFound();
@@ -42,45 +51,41 @@ namespace CarFest.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create (CarDTO car)
+        public async Task<IActionResult> Create(CarDTO car)
         {
-            _carService.Create(car);
-            return CreatedAtAction(nameof(Get), new {id = car.Id }, car);
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            await _carService.CreateAsync(car, user.Id);
+            return CreatedAtAction(nameof(Get), new { id = car.Id }, car);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, CarDTO car)
+        public async Task<IActionResult> Update(int id, CarDTO car)
         {
+
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             if (id != car.Id)
             {
                 return BadRequest();
             }
 
-            _carService.Update(car);
+            _carService.Update(car, user.Id);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             try
             {
-                _carService.Delete(id);
+                _carService.DeleteUserCar(id, user.Id);
             }
             catch (ArgumentNullException e)
             {
                 return NotFound(e.Message);
             }
             return NoContent();
-        }
-
-
-        //[HttpGet]
-        //public async Task<ActionResult> GetAllAsync()
-        //{
-        //    var result = await _carService.GetAllAsync();
-        //    return Ok(result);
-        //}
-
+        }     
     }
 }

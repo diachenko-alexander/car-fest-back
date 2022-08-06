@@ -11,8 +11,8 @@ namespace CarFest.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private readonly ApplicationDbContext _context;
-        private DbSet<TEntity> _entity;
+        protected readonly ApplicationDbContext _context;
+        protected DbSet<TEntity> _entity;
 
         public GenericRepository(ApplicationDbContext context)
         {
@@ -35,14 +35,20 @@ namespace CarFest.DAL.Repositories
             return _entity.Find(id);
         }
 
-        public Task<TEntity> GetAsync(int id)
+        public async Task<TEntity> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _entity.FindAsync(id);
         }
 
         public TEntity Create(TEntity entity)
         {
             _entity.Add(entity);
+            return entity;
+        }
+
+        public async Task<TEntity> CreateAsync (TEntity entity)
+        {
+            await _context.AddAsync(entity);
             return entity;
         }
 
@@ -53,8 +59,8 @@ namespace CarFest.DAL.Repositories
             {
                 _entity.Remove(entity);
             }
-        }       
-
+        }
+                
         public TEntity Update(TEntity entity)
         {
             if (entity == null)
@@ -64,5 +70,15 @@ namespace CarFest.DAL.Repositories
             _entity.Update(entity);
             return entity;
         }
+
+        //public Task<TEntity> UpdateAsync (TEntity entity)
+        //{
+        //    if (entity == null)
+        //    {
+        //        return null;
+        //    }
+        //    _entity.Update(entity);
+        //    return entity;
+        //}
     }
 }

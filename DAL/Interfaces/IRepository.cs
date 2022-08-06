@@ -10,7 +10,10 @@ namespace CarFest.DAL.Interfaces
         TEntity Get(int id);
         Task<TEntity> GetAsync(int id);
         TEntity Create(TEntity entity);
+        Task<TEntity> CreateAsync(TEntity entity);
         TEntity Update(TEntity entity);
+        //Task<TEntity> UpdateAsync(TEntity entity);
         void Delete (int id);
+        //Task DeleteAsync(int id);
     }
 }

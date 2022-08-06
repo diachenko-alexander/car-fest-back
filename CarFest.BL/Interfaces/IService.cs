@@ -10,8 +10,8 @@ namespace CarFest.BL.Interfaces
     {
         IEnumerable<T> GetAll();
         T Get(int id);
-        T Create(T entity);
-        T Update(T entity);
+        T Create(T entity, string userId);
+        T Update(T entity, string userId);
         void Delete(int id);
     }
 }

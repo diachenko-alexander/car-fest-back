@@ -17,6 +17,8 @@ namespace CarFest.DAL.Context
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             var connectioString = configuration.GetConnectionString("DatabaseConnection");
             builder.UseSqlServer(connectioString);
+            builder.EnableDetailedErrors();
+            builder.EnableSensitiveDataLogging();
             return new ApplicationDbContext(builder.Options);
         }
     }
