@@ -25,6 +25,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CarFest.API.JwtFeatures;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
 
 namespace CarFest.API
 {
@@ -84,7 +86,8 @@ namespace CarFest.API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
                 };
             });
-            services.AddScoped<JwtHandler>();
+            services.AddScoped<JwtHandler>();           
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,7 +107,7 @@ namespace CarFest.API
             //add CORS policy
             app.UseCors();
             app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseAuthorization();            
 
             app.UseEndpoints(endpoints =>
             {

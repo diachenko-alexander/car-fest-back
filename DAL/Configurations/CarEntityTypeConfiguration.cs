@@ -22,11 +22,11 @@ namespace CarFest.DAL.Configurations
                 .HasColumnName("Model")
                 .HasMaxLength(500)
                 .IsRequired();
-
             builder
                 .Property(x => x.Price)
                 .HasColumnName("Price")
                 .IsRequired();
+
 
         }
     }
