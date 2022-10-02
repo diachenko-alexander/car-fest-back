@@ -10,13 +10,14 @@ namespace DAL.Context
             : base(options) { }
 
         public DbSet<Car> Cars { get; set; }
-        
+        public DbSet<Image> Images { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
-                
+
     }
 
 

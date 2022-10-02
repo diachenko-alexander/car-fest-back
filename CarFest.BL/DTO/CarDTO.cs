@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CarFest.BL.DTO
+﻿namespace CarFest.BL.DTO
 {
     public class CarDTO
     {

@@ -1,10 +1,10 @@
-﻿using CarFest.DAL.Models;
-using CarFest.DAL.Interfaces;
+﻿using CarFest.DAL.Interfaces;
+using CarFest.DAL.Models;
 using DAL.Context;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CarFest.DAL.Repositories
 {
@@ -37,8 +37,8 @@ namespace CarFest.DAL.Repositories
         {
             var usersCars = _context
                 .Cars
-                .Where(x => x.UserId == userId);                
+                .Where(x => x.UserId == userId);
             return await usersCars.ToListAsync();
-        }       
+        }
     }
 }

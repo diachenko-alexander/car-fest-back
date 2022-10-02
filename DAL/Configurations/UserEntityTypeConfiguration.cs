@@ -6,7 +6,7 @@ namespace CarFest.DAL.Configurations
 {
     class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure (EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
             builder
                 .ToTable("AspNetUsers");

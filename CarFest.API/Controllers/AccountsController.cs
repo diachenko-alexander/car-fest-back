@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CarFest.BL.Interfaces;
+﻿using CarFest.API.JwtFeatures;
 using CarFest.BL.DTO;
-using CarFest.BL.Services;
+using CarFest.BL.Interfaces;
+using CarFest.DAL.Models;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
-using CarFest.API.JwtFeatures;
-using Microsoft.AspNetCore.Identity;
-using CarFest.DAL.Models;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace CarFest.API.Controllers
 {
@@ -29,13 +27,13 @@ namespace CarFest.API.Controllers
             _jwtHandler = jwtHandler;
             _userManager = userManager;
         }
-            
-        
+
+
         [HttpPost("registration")]
         public IActionResult RegisterUser(UserForRegistrationDTO userForRegistration)
         {
             try
-            {                
+            {
                 var user = _userRegistrationService.RegisterUser(userForRegistration);
                 if (!user.Result.Succeeded)
                 {
@@ -48,17 +46,17 @@ namespace CarFest.API.Controllers
             catch (ArgumentNullException e)
             {
                 return NotFound(e.Message);
-            }   
-            
+            }
 
-           
+
+
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login ([FromBody] UserForAuthenticationDto userForAuthentication)
+        public async Task<IActionResult> Login([FromBody] UserForAuthenticationDto userForAuthentication)
         {
             var user = await _userManager.FindByNameAsync(userForAuthentication.Email);
-           if (user == null || !await _userManager.CheckPasswordAsync(user, userForAuthentication.Password))
+            if (user == null || !await _userManager.CheckPasswordAsync(user, userForAuthentication.Password))
             {
                 return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
             }

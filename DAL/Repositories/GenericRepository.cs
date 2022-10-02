@@ -1,10 +1,7 @@
 ﻿using CarFest.DAL.Interfaces;
 using DAL.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CarFest.DAL.Repositories
@@ -46,7 +43,7 @@ namespace CarFest.DAL.Repositories
             return entity;
         }
 
-        public async Task<TEntity> CreateAsync (TEntity entity)
+        public async Task<TEntity> CreateAsync(TEntity entity)
         {
             await _context.AddAsync(entity);
             return entity;
@@ -60,7 +57,7 @@ namespace CarFest.DAL.Repositories
                 _entity.Remove(entity);
             }
         }
-                
+
         public TEntity Update(TEntity entity)
         {
             if (entity == null)

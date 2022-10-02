@@ -4,9 +4,6 @@ using CarFest.BL.Interfaces;
 using CarFest.DAL.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CarFest.BL.Services
@@ -21,7 +18,7 @@ namespace CarFest.BL.Services
         {
             _autoMapper = mapper;
             _userManager = user;
-            
+
         }
 
         public async Task<IdentityResult> RegisterUser(UserForRegistrationDTO userForRegistration)
@@ -34,7 +31,7 @@ namespace CarFest.BL.Services
             var user = _autoMapper.Map<User>(userForRegistration);
             var result = await _userManager.CreateAsync(user, userForRegistration.Password);
             return result;
-           
+
 
         }
     }

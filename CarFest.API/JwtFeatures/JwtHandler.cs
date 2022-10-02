@@ -4,10 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CarFest.API.JwtFeatures
 {
@@ -30,7 +28,7 @@ namespace CarFest.API.JwtFeatures
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public List<Claim> GetClaims (IdentityUser user)
+        public List<Claim> GetClaims(IdentityUser user)
         {
             var claims = new List<Claim>
             {

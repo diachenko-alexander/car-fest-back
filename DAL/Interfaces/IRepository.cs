@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace CarFest.DAL.Interfaces
 {
-   public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : class
     {
         IEnumerable<TEntity> GetAll();
         Task<List<TEntity>> GetAllAsync();
@@ -13,7 +13,7 @@ namespace CarFest.DAL.Interfaces
         Task<TEntity> CreateAsync(TEntity entity);
         TEntity Update(TEntity entity);
         //Task<TEntity> UpdateAsync(TEntity entity);
-        void Delete (int id);
+        void Delete(int id);
         //Task DeleteAsync(int id);
     }
 }

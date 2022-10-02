@@ -1,7 +1,7 @@
 ﻿using CarFest.DAL.Interfaces;
+using DAL.Context;
 using System;
 using System.Threading.Tasks;
-using DAL.Context;
 
 namespace CarFest.DAL.Repositories
 {
@@ -11,14 +11,18 @@ namespace CarFest.DAL.Repositories
         private bool _disposed;
 
         private ICarRepository _carRepository;
+        private IImageRepository _imageRepository;
 
         public UnitOfWork(ApplicationDbContext context)
         {
-            _context = context;     
+            _context = context;
         }
 
         public ICarRepository CarRepository => _carRepository
             ?? (_carRepository = new CarRepository(_context));
+
+        public IImageRepository ImageRepository => _imageRepository
+            ?? (_imageRepository = new ImageRepository(_context));
 
         public void Save()
         {
@@ -30,7 +34,7 @@ namespace CarFest.DAL.Repositories
             await _context.SaveChangesAsync();
         }
 
-        protected virtual void Dispose (bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
             {
