@@ -1,32 +1,23 @@
+using CarFest.API.JwtFeatures;
 using CarFest.BL.Configuration;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CarFest.DAL;
-using DAL.Context;
 using CarFest.BL.Interfaces;
 using CarFest.BL.Services;
 using CarFest.DAL.Interfaces;
-using CarFest.DAL.Repositories;
 using CarFest.DAL.Models;
-using Microsoft.AspNetCore.Identity;
+using CarFest.DAL.Repositories;
+using DAL.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
-using CarFest.API.JwtFeatures;
-using System.Security.Principal;
-using Microsoft.AspNetCore.Http;
 
 namespace CarFest.API
 {
@@ -45,7 +36,7 @@ namespace CarFest.API
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);                
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -55,6 +46,7 @@ namespace CarFest.API
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICarService, CarService>();
             services.AddScoped<IUserRegistrationService, UserRegistrationService>();
+            services.AddScoped<IImageService, ImageService>();
             //add CORS policy
             services.AddCors(options =>
             {
@@ -73,7 +65,8 @@ namespace CarFest.API
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => {
+            }).AddJwtBearer(options =>
+            {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -86,8 +79,8 @@ namespace CarFest.API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
                 };
             });
-            services.AddScoped<JwtHandler>();           
-            
+            services.AddScoped<JwtHandler>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,16 +96,16 @@ namespace CarFest.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            
+
             //add CORS policy
             app.UseCors();
             app.UseAuthentication();
-            app.UseAuthorization();            
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });           
+            });
         }
     }
 }

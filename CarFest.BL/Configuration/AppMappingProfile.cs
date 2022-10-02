@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using CarFest.DAL.Models;
 using CarFest.BL.DTO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CarFest.DAL.Models;
 
 namespace CarFest.BL.Configuration
 {
@@ -15,7 +11,8 @@ namespace CarFest.BL.Configuration
             CreateMap<Car, CarDTO>().ReverseMap();
             CreateMap<UserForRegistrationDTO, User>()
                 .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+            CreateMap<Image, ImageDTO>().ReverseMap();
         }
-       
+
     }
 }

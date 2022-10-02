@@ -6,7 +6,7 @@ namespace CarFest.DAL.Configurations
 {
     public class CarEntityTypeConfiguration : IEntityTypeConfiguration<Car>
     {
-        public void Configure (EntityTypeBuilder<Car> builder)
+        public void Configure(EntityTypeBuilder<Car> builder)
         {
             builder
                 .ToTable("Cars");
@@ -26,6 +26,10 @@ namespace CarFest.DAL.Configurations
                 .Property(x => x.Price)
                 .HasColumnName("Price")
                 .IsRequired();
+            builder
+                .HasMany(t => t.Images)
+                .WithOne(t => t.Car)
+                .HasForeignKey(t => t.CarId);
 
 
         }

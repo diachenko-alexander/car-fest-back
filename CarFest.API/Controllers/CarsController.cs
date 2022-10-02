@@ -1,16 +1,13 @@
-﻿using CarFest.BL.Interfaces;
-using CarFest.BL.DTO;
+﻿using CarFest.BL.DTO;
+using CarFest.BL.Interfaces;
+using CarFest.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
-using CarFest.DAL.Models;
 
 namespace CarFest.API.Controllers
 {
@@ -21,21 +18,21 @@ namespace CarFest.API.Controllers
     public class CarsController : ControllerBase
     {
         private ICarService _carService;
-        private readonly UserManager<User> _userManager;        
+        private readonly UserManager<User> _userManager;
         public CarsController(ICarService carService, UserManager<User> userManager)
         {
             _carService = carService;
             _userManager = userManager;
-            
-        }      
-       
+
+        }
+
         [HttpGet]
         public async Task<OkObjectResult> GetAll()
         {
-            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);            
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
             return Ok(await _carService.GetUserCarsAsync(user.Id));
-        }        
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -86,6 +83,8 @@ namespace CarFest.API.Controllers
                 return NotFound(e.Message);
             }
             return NoContent();
-        }     
+        }
+
+
     }
 }

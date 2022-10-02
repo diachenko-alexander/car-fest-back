@@ -1,13 +1,11 @@
-﻿using CarFest.BL.Interfaces;
+﻿using AutoMapper;
+using CarFest.BL.DTO;
+using CarFest.BL.Interfaces;
 using CarFest.DAL.Interfaces;
-using AutoMapper;
+using CarFest.DAL.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using CarFest.BL.DTO;
-using CarFest.DAL.Models;
 
 namespace CarFest.BL.Services
 {
@@ -51,7 +49,7 @@ namespace CarFest.BL.Services
         {
             return _autoMapper.Map<CarDTO>(await _db.CarRepository.GetAsync(id));
         }
-               
+
 
         public CarDTO Create(CarDTO entity, string userId)
         {
@@ -118,8 +116,8 @@ namespace CarFest.BL.Services
 
             _db.CarRepository.Delete(id);
             _db.Save();
-        } 
-        
+        }
+
         public void DeleteUserCar(int id, string userId)
         {
             var car = _db.CarRepository.GetUserCar(id, userId);
