@@ -56,9 +56,9 @@ namespace CarFest.API.Controllers
         public async Task<IActionResult> Login([FromBody] UserForAuthenticationDto userForAuthentication)
         {
             var user = await _userManager.FindByNameAsync(userForAuthentication.Email);
-            if (user == null || !await _userManager.CheckPasswordAsync(user, userForAuthentication.Password))
+           if (user == null || !await _userManager.CheckPasswordAsync(user, userForAuthentication.Password))
             {
-                return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
+                return Unauthorized(new AuthResponseDto {IsAuthSuccessful = false, ErrorMessage = "Invalid Authentication" });
             }
 
             var signingcredentials = _jwtHandler.GetSigningCredential();
@@ -67,7 +67,18 @@ namespace CarFest.API.Controllers
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
             return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token, UserFirstName = user.FirstName });
+        }
 
+        [HttpGet("UserInfo")]
+        public async Task<IActionResult> GetUserInfo ()
+        {
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            return Ok(new UserDTO
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,                
+            });
         }
     }
 }
