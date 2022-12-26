@@ -2,6 +2,7 @@
 using CarFest.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -34,17 +35,11 @@ namespace CarFest.API.Controllers
         }
 
         [HttpPost("ChangeUserPassword")]
-        public async Task<IActionResult> ChangeUserPassword([FromBody] string oldPassword, string newPassword)
+        public async Task<IActionResult> ChangeUserPassword(ChangePasswordDTO data)
         {
-            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-            try
-            {
-                await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
-                return Ok();
-            } catch
-            {
-                return BadRequest();
-            }
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);           
+            var result = await _userManager.ChangePasswordAsync(user, data.OldPassword, data.NewPassword);
+            return Ok(result);
         }
     }
 }
